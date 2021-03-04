@@ -3,7 +3,8 @@ import React from 'react';
 const Cart = (props) => {
     const product = props.product;
     const totalPrice = product.reduce((total, product) => {
-        return total += product.price;
+        return total += product.price*product.quantity;
+        
     }, 0);
     return (        
         <div>
