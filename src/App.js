@@ -1,7 +1,9 @@
 import './App.css';
 import Header from './Components/Header/Header';
 import Shop from './Components/Shop/Shop';
-import React from "react";
+import React, { createContext, useState } from "react";
+import Login from './Components/Login/Login'
+import Shipment from './Components/Shipment/Shipment'
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,9 +13,15 @@ import Review from './Components/Review/Review';
 import NotFount from './Components/NotFound/NotFount';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 
+
+export const UserContext = createContext();
+
+
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
-    <div>
+    <UserContext.Provider value = {[loggedInUser, setLoggedInUser]}>
+      <h3>{loggedInUser.email}</h3>
       <Header></Header>
       <Router>
         <Switch>
@@ -26,6 +34,12 @@ function App() {
           <Route path='/product/:productKey'>
             <ProductDetails></ProductDetails>
           </Route>
+          <Route path='/login'>
+            <Login></Login>            
+          </Route>
+          <Route path='/shipment'>
+            <Shipment></Shipment>
+          </Route>
           <Route exact path='/'>
             <Shop></Shop>
           </Route>
@@ -34,7 +48,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </UserContext.Provider>
   );
 }
 
