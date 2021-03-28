@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import fakeData from '../../fakeData/index';
-import { useState } from 'react';
+import { useContext,useState } from 'react';
 import './Shop.css'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager'
 import { Link } from 'react-router-dom';
+import { ProductsContext } from '../../App'
 
 const Shop = () => {
-    const first10 = fakeData.slice(0, 250);
-    const [products, setProducts] = useState(first10);
+    const allProducts = fakeData.slice(0, 250);
+    const [products, setProducts] = useContext(ProductsContext);
+
 
     // get data form database based on useEffect
     useEffect(() => {
+        setProducts(allProducts);
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
         const previousCart = productKeys.map(existingKey => {

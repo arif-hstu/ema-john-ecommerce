@@ -1,0 +1,46 @@
+.ManageInventory {
+	display: grid;
+	grid-template-columns: repeat(3, 1 fr);
+	grid-gap: 1rem;
+	grid-template-areas: 
+	'. header .'
+	'. input1 .'
+	' . input2 .'
+	' . input3 .'
+	'. input4 .'
+	'. input5 . '
+	'. button .';
+}
+
+
+
+.ManageInventory > input {
+	height: 2.5rem;
+	border-radius: 0.5rem;
+}
+
+.ManageInventory > h4 {
+	grid-area: header;
+	Justify-self: center;
+	align-self: center;
+}
+
+.ManageInventory input:nth-of-type(1) {
+	grid-area: input1;	
+}
+
+.ManageInventory input:nth-of-type(2) {
+	grid-area: input2;
+}
+
+.ManageInventory input:nth-of-type(3) {
+	grid-area: input3;
+}
+
+.ManageInventory input:nth-of-type(4) {
+	grid-area: input4;
+}
+
+.ManageInventory button {
+	grid-area: button;
+}
