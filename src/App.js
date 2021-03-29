@@ -44,7 +44,7 @@ function App() {
               <Review />
             </Route>
             <Route path='/product/:productKey'>
-              <ProductDetails></ProductDetails>
+            <ProductDetails></ProductDetails>
             </Route>
             <Route path='/login'>
               <Login></Login>

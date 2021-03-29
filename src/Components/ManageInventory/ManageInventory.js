@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext, ProductsContext } from '../../App'
 
 // impor styleSheet
@@ -12,20 +12,49 @@ const ManageInventory = () => {
 	// consume usercontext data
 	const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
+	// single product handling
+	const [singleProduct, setSingleProduct] = useState({});
+
 	// handle on blur
-	const handleOnBlur = () => {
-		console.log('on blur worked')
+	const handleOnBlur = (e) => {
+		console.log('on blur worked');
+		const newProduct = {...singleProduct};
+
+		if( e.target.name === 'productPrice') {
+			newProduct[e.target.name] = parseInt(e.target.value);
+		} else {
+			newProduct[e.target.name] = e.target.value;
+		}
+		setSingleProduct(newProduct);
 	}
+
+	const clearTheInput = (e) => {
+		e.target.value = '';
+	}
+
 
 	// handle add product 
 	const addProduct = () => {
-		console.log(products)
+		fetch('http://localhost:5000/addProduct',{
+			method: 'POST',
+			headers: {
+				'Content-type' : 'applicaton/json'
+			},
+			body: JSON.stringify(singleProduct) 
+		})
+		.then(res => res.json())
+		.then(result => {
+			console.log(result);
+		})
+
+		console.log(singleProduct)
+
 	}
 	return (
 		<div className="ManageInventory">
 			<h4>Please input product info</h4>
-			<input onBlur={handleOnBlur} placeholder='Name of the product' type="text" name="" id="" value={loggedInUser.name} />
-			<input onBlur={handleOnBlur} placeholder='Price of the product' type="text" name="" id="" value={loggedInUser.email} />
+			<input onFocus={clearTheInput} onBlur={handleOnBlur} placeholder='Name of the product' type="text" name="productName" id="" />
+			<input onFocus={clearTheInput} onBlur={handleOnBlur} placeholder='Price of the product' type="text" name="productPrice" id="" />
 			<button value="" onClick={addProduct}>
 				Add Post
 			</button>
