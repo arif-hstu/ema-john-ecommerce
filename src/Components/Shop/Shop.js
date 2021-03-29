@@ -9,13 +9,19 @@ import { Link } from 'react-router-dom';
 import { ProductsContext } from '../../App'
 
 const Shop = () => {
-    const allProducts = fakeData.slice(0, 250);
+    // const allProducts = fakeData.slice(0, 250);
     const [products, setProducts] = useContext(ProductsContext);
 
-
+    // fetch all products from mern-ema-john.herokuapp.com
     // get data form database based on useEffect
     useEffect(() => {
-        setProducts(allProducts);
+        fetch('https://mern-ema-john.herokuapp.com/allProducts')
+        .then(res => res.json())
+        .then(data => setProducts(data))
+    }, []);
+    
+    useEffect(() => {
+        // setProducts(allProducts);
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
         const previousCart = productKeys.map(existingKey => {
